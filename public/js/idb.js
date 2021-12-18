@@ -4,37 +4,37 @@ const request = indexedDB.open('budget', 1);
 
 request.onupgradeneeded = function (event) {
 	db = event.target.result;
-	db.createObjectStore('transaction', {
+	db.createObjectStore('pending', {
 		autoIncrement: true,
 	});
-};
-
-request.onerror = function (event) {
-	console.log(event.target.errorCode);
 };
 
 request.onsuccess = function (event) {
 	db = event.target.result;
 
 	if (navigator.onLine) {
-		uploadBudget();
+		checkDatabase();
 	}
 };
 
-function saveRecord(record) {
-	const transaction = db.transaction('transaction', 'readwrite');
+request.onerror = function (event) {
+	console.log(event.target.errorCode);
+};
 
-	const store = transaction.objectStore('transaction');
+function saveRecord(record) {
+	const transaction = db.transaction(['pending'], 'readwrite');
+
+	const store = transaction.objectStore('pending');
 
 	store.add(record);
 }
 
-function uploadBudget() {
-	const transaction = db.transaction('transaction', 'readwrite');
+function checkDatabase() {
+	const transaction = db.transaction(['pending'], 'readwrite');
 
-	const store = transaction.objectStore('transaction');
+	const store = transaction.objectStore('pending');
 
-	const getAll = transaction.getAll();
+	const getAll = store.getAll();
 
 	getAll.onsuccess = function () {
 		if (getAll.result.length > 0) {
@@ -47,21 +47,14 @@ function uploadBudget() {
 				},
 			})
 				.then((response) => response.json())
-				.then((serverResponse) => {
-					if (serverResponse.message) {
-						throw new Error(serverResponse);
-					}
-
-					const transaction = db.transaction('transaction', 'readwrite');
-					const store = transaction.objectStore('transaction');
+				.then(() => {
+					const transaction = db.transaction(['pending'], 'readwrite');
+					const store = transaction.objectStore('pending');
 
 					store.clear();
-				})
-				.catch((err) => {
-					console.log(err);
 				});
 		}
 	};
 }
 
-window.addEventListener('online', uploadBudget);
+window.addEventListener('online', checkDatabase);
