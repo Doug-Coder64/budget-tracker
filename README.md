@@ -2,15 +2,15 @@
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-## Description
-
 A Progressive web application that allows the user to track their budget. If the user is offline they can still add to their budget, once they are back online the budget automatically uploads.
 
 ## Table of Contents
 
-- [Description](#Description)
+- [Description](#Budget_Tracker)
 - [Installation](#Installation)
 - [Usage](#Usage)
+- [Contributing](#Contributing)
+
 
 ## Installation
 
@@ -24,9 +24,9 @@ Try it out Here: https://doug-coder64-budget-tracker.herokuapp.com/
 
 <img width="977" alt="Screen Shot 2021-12-18 at 9 42 05 AM" src="https://user-images.githubusercontent.com/85598391/146646838-40ec899e-0607-4928-8912-0e0489a3baae.png">
 
-## License
+## Contributing
 
-This Project is covered under the MIT
+Please read [CONTRIBUTING.md](https://github.com/Doug-Coder64/budget-tracker/blob/main/Contributing.mdec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Questions
 
